@@ -8,6 +8,7 @@ An Android application for Ars Technica readers, built on WebView and RSS.
 * Manage notifications or turn them off entirely
 * Support for Notification Channels (Android 8 Oreo and above)
 * Native dark theme
+* Notifications on Wear OS with actions
 
 ## Known Issues
 * After clicking on a notification, going back to the home page, and not using the app for a while, the app will reload the article that the notification was for, not the home page
