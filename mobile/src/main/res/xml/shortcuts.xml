@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--<shortcut
+        android:shortcutId="shortcut_settings"
+        android:enabled="true"
+        android:icon="@mipmap/shortcut_settings_round"
+        android:shortcutShortLabel="@string/menu_settings">
+        <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+            <background android:drawable="@color/shortcut_settings_background"/>
+            <foreground android:drawable="@mipmap/shortcut_settings_foreground"/>
+        </adaptive-icon>
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.ezoob.arstechnica"
+            android:targetClass="com.ezoob.arstechnica.MainActivity">
+        </intent>
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.ezoob.arstechnica"
+            android:targetClass="com.ezoob.arstechnica.SettingsActivity">
+        </intent>
+    </shortcut>
+    <shortcut
+    android:shortcutId="shortcut_home"
+    android:enabled="true"
+    android:icon="@mipmap/shortcut_home_round"
+    android:shortcutShortLabel="@string/menu_home">
+        <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+            <background android:drawable="@color/shortcut_home_background"/>
+            <foreground android:drawable="@mipmap/shortcut_home_foreground"/>
+        </adaptive-icon>
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.ezoob.arstechnica"
+            android:targetClass="com.ezoob.arstechnica.MainActivity"
+            android:scheme="https"
+            android:host="arstechnica.com">
+            <extra
+                android:name="CurrentURL"
+                android:value="https://arstechnica.com" />
+        </intent>
+    </shortcut>-->
+</shortcuts>
+

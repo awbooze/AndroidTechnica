@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:theme="@style/AppTheme">
+
+        <!-- NOTE: EditTextPreference accepts EditText attributes. -->
+        <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
+    <PreferenceCategory
+        android:title="@string/pref_header_webview"
+        android:key="key_header_webview">
+
+        <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="@string/pref_default_url"
+        android:key="key_url"
+        android:selectAllOnFocus="true"
+        android:title="@string/pref_title_url" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_header_rss"
+        android:key="key_header_rss">
+
+        <SwitchPreference
+            android:key="enable_notifications"
+            android:title="@string/pref_enable_notifications_title"
+            android:defaultValue="false"
+            android:summaryOn="@string/pref_enable_notifications_enabled"
+            android:summaryOff="@string/pref_enable_notifications_disabled"/>
+
+        <MultiSelectListPreference
+            android:key="rss_feeds_subscribed"
+            android:title="@string/pref_poll_rss_subscriptions_title"
+            android:entries="@array/pref_poll_selections_titles"
+            android:entryValues="@array/pref_poll_selections_values"
+            android:defaultValue="@null"
+            android:dependency="enable_notifications" />
+
+        <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
+             dismiss it. -->
+        <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
+        <ListPreference
+            android:key="sync_frequency"
+            android:defaultValue="60"
+            android:entries="@array/pref_poll_frequency_titles"
+            android:entryValues="@array/pref_poll_frequency_values"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null"
+            android:title="@string/pref_title_poll_frequency"
+            android:summary="Checking for new articles every %s"
+            android:dependency="enable_notifications"/>
+
+        <SwitchPreference
+            android:key="less_notifications"
+            android:defaultValue="false"
+            android:title="@string/pref_less_notifications_title"
+            android:dependency="enable_notifications"
+            android:summaryOn="@string/pref_less_notifications_on"
+            android:summaryOff="@string/pref_less_notifications_off"/>
+
+        <Preference android:title="@string/pref_header_notifications"
+            android:key="notification_preference"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_dev_options_header"
+        android:key="key_dev_options_header">
+
+        <SwitchPreference
+            android:key="dev_options_on_off"
+            android:title="@string/pref_dev_options_enabled"
+            android:defaultValue="false"
+            android:summaryOn="@string/pref_dev_options_on"
+            android:summaryOff="@string/pref_dev_options_off">
+
+        </SwitchPreference>
+
+        <Preference android:title="@string/pref_new_test_notification"
+            android:key="new_test_notification"
+            android:dependency="dev_options_on_off">
+        </Preference>
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="isScheduled"
+            android:title="@string/rss_dev_service_restart_title"
+            android:summary="@string/rss_dev_service_restart_description"
+            android:dependency="dev_options_on_off"/>
+
+        <SwitchPreference android:title="@string/pref_toast_when_service_runs"
+            android:key="toast_when_service_runs"
+            android:defaultValue="false"
+            android:dependency="dev_options_on_off">
+        </SwitchPreference>
+
+        <EditTextPreference
+            android:title="@string/rss_dev_least_recent_date"
+            android:key="least_recent_date"
+            android:dependency="dev_options_on_off">
+        </EditTextPreference>
+
+        <Preference
+            android:title="@string/rss_dev_minus_hour"
+            android:key="rss_dev_minus_hour"
+            android:dependency="dev_options_on_off">
+        </Preference>
+
+        <Preference
+            android:title="@string/rss_dev_minus_day"
+            android:key="rss_dev_minus_day"
+            android:dependency="dev_options_on_off">
+        </Preference>
+
+        <EditTextPreference
+            android:title="@string/rss_dev_most_recent_notification_content"
+            android:key="rss_dev_most_recent_notification_content"
+            android:dependency="dev_options_on_off">
+        </EditTextPreference>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_about_header"
+        android:key="key_about_header">
+
+        <Preference
+            android:title="@string/created_by"
+            android:summary="@string/app_creator"/>
+        <Preference
+            android:title="@string/pref_about_open_licenses"
+            android:key="key_open_licenses" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -1,0 +1,159 @@
+<resources>
+    <string name="app_name" translatable="false">Android Technica</string>
+
+    <!-- Strings related to the action bar menu -->
+    <string name="menu_settings">Settings</string>
+    <string name="menu_reload">Reload</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_open_in_browser">Open in browser</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_copy">Copy current URL</string>
+    <string name="menu_forward">Forward</string>
+    <string name="menu_back">Backward</string>
+
+    <string name="unfinished">Sorry, but this feature has not yet been implemented.</string>
+    <string name="url_copy_successful">URL copied</string>
+    <string name="url_copy_failed">URL copying failed</string>
+
+    <!-- Strings related to Settings -->
+    <string name="settings_title">Settings</string>
+
+    <string name="pref_header_webview">Webview</string>
+
+    <string name="pref_title_url">Home URL</string>
+    <string name="pref_default_url" translatable="false">https://arstechnica.com</string>
+
+    <!-- Strings for related to the Notification settings area -->
+    <string name="pref_header_rss">RSS notifications</string>
+
+    <string name="pref_enable_notifications_title">Enable Notifications</string>
+    <string name="pref_enable_notifications_enabled">Notifications are enabled</string>
+    <string name="pref_enable_notifications_disabled">Notifications are disabled</string>
+
+    <string name="pref_title_poll_frequency">RSS poll frequency</string>
+    <string-array name="pref_poll_frequency_titles">
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>2 hours</item>
+        <item>3 hours</item>
+        <item>5 hours</item>
+    </string-array>
+    <string-array name="pref_poll_frequency_values">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>120</item>
+        <item>180</item>
+        <item>300</item>
+    </string-array>
+
+    <string name="pref_poll_rss_subscriptions_title">RSS Notification Subscriptions</string>
+
+    <string-array name="pref_poll_channels_titles">
+        <item>ITChannel</item>
+        <item>newsChannel</item>
+        <item>businessChannel</item>
+        <item>securityChannel</item>
+        <item>policyChannel</item>
+        <item>gamingChannel</item>
+        <item>scienceChannel</item>
+        <item>scifiChannel</item>
+        <item>carsChannel</item>
+        <item>staffChannel</item>
+        <item>boardGamesChannel</item>
+    </string-array>
+
+    <string-array name="pref_poll_selections_titles">
+        <item>Information Technology</item>
+        <item>Tech News &amp; Reviews</item>
+        <item>Business</item>
+        <item>Security &amp; Hacktivism</item>
+        <item>Tech Policy</item>
+        <item>Gaming &amp; Entertainment</item>
+        <item>Science</item>
+        <item>Sci-Fi &amp; Fantasy</item>
+        <item>Cars</item>
+        <item>Staff Blogs</item>
+        <item>Board Games</item>
+    </string-array>
+
+    <string-array name="pref_poll_selections_values">
+        <item>http://feeds.arstechnica.com/arstechnica/technology-lab</item>
+        <item>http://feeds.arstechnica.com/arstechnica/gadgets</item>
+        <item>http://feeds.arstechnica.com/arstechnica/business</item>
+        <item>http://feeds.arstechnica.com/arstechnica/security</item>
+        <item>http://feeds.arstechnica.com/arstechnica/tech-policy</item>
+        <item>http://feeds.arstechnica.com/arstechnica/gaming</item>
+        <item>http://feeds.arstechnica.com/arstechnica/science</item>
+        <item>http://feeds.arstechnica.com/arstechnica/multiverse</item>
+        <item>http://feeds.arstechnica.com/arstechnica/cars</item>
+        <item>http://feeds.arstechnica.com/arstechnica/staff-blogs</item>
+        <item>http://feeds.arstechnica.com/arstechnica/cardboard</item>
+    </string-array>
+
+    <string name="IT">Business &amp; IT</string>
+    <string name="news">Tech News &amp; Reviews</string>
+    <string name="biz">Business</string>
+    <string name="security">Security &amp; Hacktivism</string>
+    <string name="policy">Tech Policy</string>
+    <string name="gaming">Gaming &amp; Entertainment</string>
+    <string name="science">Science</string>
+    <string name="scifi">Sci-Fi &amp; Fantasy</string>
+    <string name="cars">Cars</string>
+    <string name="staff">Staff Blogs</string>
+    <string name="board_games">Board Games</string>
+
+    <string name="pref_less_notifications_title">Show me less notifications</string>
+    <string name="pref_less_notifications_off">Showing you notifications for articles you may have already seen</string>
+    <string name="pref_less_notifications_on">Showing you notifications for articles you probably have not seen</string>
+
+    <!-- Strings for Notifications -->
+    <string name="pref_header_notifications">System notification settings</string>
+
+    <string name="test_notification_title">Test Article Notification</string>
+    <string name="test_notification_small_text">This is &lt;i>long text&lt;/i> that would not be able to fit on one line.</string>
+    <string name="test_notification_large_text">This is &lt;i>long text&lt;/i> that would not be able to fit on one line. It would typically include a snippet from the article or the subtitle in the notification.</string>
+
+    <string name="pref_new_test_notification">Generate Test Notification</string>
+
+    <string name="notification_action_comments">View comments</string>
+    <string name="notification_action_share">Share</string>
+    <string name="notification_action_open_on_phone">Open on phone</string>
+
+    <!-- Strings relating to the app's Notification Service -->
+    <string name="rss_service_title">Notification Service</string>
+    <string name="rss_service_description">A service that fetches notifications from Ars Technica RSS Feeds.</string>
+    <string name="pref_toast_when_service_runs">Show toast when notification service runs</string>
+    <string name="toast_when_service_runs_message">Ars Technica: RSS Notification Service Running</string>
+
+    <!-- Strings relating to the Development Options settings area -->
+    <string name="pref_dev_options_header">Developer options</string>
+    <string name="pref_dev_options_enabled">Enable developer options</string>
+    <string name="pref_dev_options_on">Developer options are enabled</string>
+    <string name="pref_dev_options_off">Developer options are disabled</string>
+    <string name="rss_dev_least_recent_date">Most recent check for updates</string>
+    <string name="rss_dev_minus_day">Set most recent check date back one day</string>
+    <string name="rss_dev_minus_hour">Set most recent check date back one hour</string>
+    <string name="rss_dev_service_restart_title">Notification Service Set</string>
+    <string name="rss_dev_service_restart_description">Turn off and exit app to restart the notification service. This should really only be used to test changes to notifications.</string>
+    <string name="rss_dev_most_recent_notification_content">Most recent notification content</string>
+
+    <!-- Strings relating to the "About" settings area -->
+    <string name="pref_about_header">About</string>
+    <string name="pref_about_open_licenses">Open Source Licenses</string>
+    <string name="open_licenses_content"><ul><li><b>Android Open Source Project</b></li>\n<li><b>Material Icons</b></li></ul>
+        \nCopyright 2018 Google
+        \nLicensed under the Apache License, Version 2.0 (the \"License\");
+            you may not use this file except in compliance with the License.
+            You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+            \nUnless required by applicable law or agreed to in writing, software
+            distributed under the License is distributed on an \"AS IS\" BASIS,
+            WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+            See the License for the specific language governing permissions and
+            limitations under the License.</string>
+    <string name="licenses_okay">@android:string/ok</string>
+    <string name="created_by">Created by</string>
+    <string name="app_creator" translatable="false">Andrew Booze</string>
+
+</resources>
