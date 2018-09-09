@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Create a report to help Android Technica improve
+about: Create a report to help us improve
 
 ---
 
