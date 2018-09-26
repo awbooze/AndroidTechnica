@@ -24,13 +24,13 @@
     <string name="pref_default_url" translatable="false">https://arstechnica.com</string>
 
     <!-- Strings for related to the Notification settings area -->
-    <string name="pref_header_rss">RSS notifications</string>
+    <string name="pref_header_rss">Notifications</string>
 
     <string name="pref_enable_notifications_title">Enable Notifications</string>
     <string name="pref_enable_notifications_enabled">Notifications are enabled</string>
     <string name="pref_enable_notifications_disabled">Notifications are disabled</string>
 
-    <string name="pref_title_poll_frequency">RSS poll frequency</string>
+    <string name="pref_title_poll_frequency">Poll frequency</string>
     <string-array name="pref_poll_frequency_titles">
         <item>15 minutes</item>
         <item>30 minutes</item>
@@ -48,7 +48,7 @@
         <item>300</item>
     </string-array>
 
-    <string name="pref_poll_rss_subscriptions_title">RSS Notification Subscriptions</string>
+    <string name="pref_poll_rss_subscriptions_title">Notification Subscriptions</string>
 
     <string-array name="pref_poll_channels_titles">
         <item>ITChannel</item>

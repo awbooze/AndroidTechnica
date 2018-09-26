@@ -28,6 +28,7 @@ import android.view.MenuItem;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -53,7 +54,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     private Toolbar appToolbar;
     private ActionBar appActionBar;
-    private final long day = 86400000;
+    private static final long DAY = 86400000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,7 +163,7 @@ public class SettingsActivity extends AppCompatActivity {
             Preference RSSCheckDatePreference = findPreference("least_recent_date");
             DateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss a z", Locale.US);
             dateFormat.setTimeZone(Calendar.getInstance().getTimeZone());
-            Date leastRecentDate = new Date(Long.parseLong(sharedSettings.getString("least_recent_date", String.valueOf(Calendar.getInstance().getTimeInMillis() - 86400000))));
+            Date leastRecentDate = new Date(Long.parseLong(sharedSettings.getString("least_recent_date", String.valueOf(Calendar.getInstance().getTimeInMillis() - DAY))));
             RSSCheckDatePreference.setSummary(leastRecentDate.toString());
 
             // When this preference is clicked, it sets back the least_recent_date preference by an hour
@@ -186,8 +187,8 @@ public class SettingsActivity extends AppCompatActivity {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
 
-                    Long date = Long.parseLong(sharedSettings.getString("least_recent_date", String.valueOf(Calendar.getInstance().getTimeInMillis() - 86400000)));
-                    date = date - 86400000;
+                    Long date = Long.parseLong(sharedSettings.getString("least_recent_date", String.valueOf(Calendar.getInstance().getTimeInMillis() - DAY)));
+                    date = date - DAY;
                     SharedPreferences.Editor sharedSettingsEditor = sharedSettings.edit();
                     sharedSettingsEditor.putString("least_recent_date", String.valueOf(date));
                     sharedSettingsEditor.apply();
