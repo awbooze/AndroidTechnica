@@ -2,14 +2,15 @@
     <string name="app_name" translatable="false">Android Technica</string>
 
     <!-- Strings related to the action bar menu -->
-    <string name="menu_settings">Settings</string>
-    <string name="menu_reload">Reload</string>
-    <string name="menu_home">Home</string>
-    <string name="menu_open_in_browser">Open in browser</string>
-    <string name="menu_share">Share</string>
-    <string name="menu_copy">Copy current URL</string>
-    <string name="menu_forward">Forward</string>
     <string name="menu_back">Backward</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_forward">Forward</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_open_in_browser">Open in browser</string>
+    <string name="menu_copy">Copy current URL</string>
+    <string name="menu_find_on_page">Find on page</string>
+    <string name="menu_reload">Reload</string>
+    <string name="menu_settings">Settings</string>
 
     <string name="unfinished">Sorry, but this feature has not yet been implemented.</string>
     <string name="url_copy_successful">URL copied</string>
