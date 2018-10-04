@@ -702,36 +702,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_settings:
-                // User chose the "Settings" item, so show the app settings UI
-                Intent settingsIntent = new Intent(this, SettingsActivity.class);
-                startActivity(settingsIntent);
-                return true;
-            case R.id.action_home:
-                // User chose to go to the home page.
-                homeURL = sharedSettings.getString("key_url", "https://arstechnica.com");
-                loadURL(homeURL);
-                return true;
-            case R.id.action_reload:
-                // User chose to reload the page.
-                reload();
-                return true;
-            case R.id.action_forward:
-                // User chose to move forward in the page history
-                if (arsWebView.canGoForward()) {    //If the app can go forward
-                    arsWebView.goForward();         //Go forward
-                }
-                return true;
             case R.id.action_backward:
                 // User chose to move backward in the page history
                 if (arsWebView.canGoBack()) {   //If the app has web history
                     arsWebView.goBack();        //Then go back
                 }
                 return true;
-            case R.id.action_open_in_browser:
-                // User chose to open the page in their default browser - Not currently in use
-                Intent browserNewPageIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(arsWebView.getUrl()));
-                startActivity(browserNewPageIntent);
+            case R.id.action_home:
+                // User chose to go to the home page.
+                homeURL = sharedSettings.getString("key_url", "https://arstechnica.com");
+                loadURL(homeURL);
+                return true;
+            case R.id.action_forward:
+                // User chose to move forward in the page history
+                if (arsWebView.canGoForward()) {    //If the app can go forward
+                    arsWebView.goForward();         //Go forward
+                }
                 return true;
             case R.id.action_share:
                 // User chose to share the page url through another app
@@ -740,17 +726,34 @@ public class MainActivity extends AppCompatActivity {
                 shareIntent.putExtra(Intent.EXTRA_TEXT, arsWebView.getUrl());
                 arsWebView.getContext().startActivity(Intent.createChooser(shareIntent,"Share link"));
                 return true;
+            case R.id.action_open_in_browser:
+                // User chose to open the page in their default browser - Not currently in use
+                Intent browserNewPageIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(arsWebView.getUrl()));
+                startActivity(browserNewPageIntent);
+                return true;
             case R.id.action_copy:
                 //User chose to copy the page to the clipboard
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("Web Page", arsWebView.getUrl());
                 if (clip != null) {
                     clipboard.setPrimaryClip(clip);
-                    Toast.makeText(MainActivity.this, R.string.url_copy_successful, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.url_copy_successful, Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    Toast.makeText(MainActivity.this, R.string.url_copy_failed, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.url_copy_failed, Toast.LENGTH_SHORT).show();
                 }
+                return true;
+            case R.id.action_find_on_page:
+                Toast.makeText(this, R.string.unfinished, Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.action_reload:
+                // User chose to reload the page.
+                reload();
+                return true;
+            case R.id.action_settings:
+                // User chose the "Settings" item, so show the app settings UI
+                Intent settingsIntent = new Intent(this, SettingsActivity.class);
+                startActivity(settingsIntent);
                 return true;
             default:
                 // If we got here, the user's action was not recognized.
@@ -780,10 +783,10 @@ public class MainActivity extends AppCompatActivity {
         unregisterReceiver(installReceiver);       //Unregister the broadcast reciever to stop using system resources.
         sharedSettings.unregisterOnSharedPreferenceChangeListener(sharedSettingsChangeListener);
 
-        //Set the current url so the app can some back to this
+        //Set the current url so the app can come back to this
         sharedSettingsEditor = sharedSettings.edit();
         sharedSettingsEditor.putString("CurrentURL", currentURL);
-        sharedSettingsEditor.commit();
+        sharedSettingsEditor.apply();
 
         //If the custom video view exists, hide it
         if (aCustomView != null) {
