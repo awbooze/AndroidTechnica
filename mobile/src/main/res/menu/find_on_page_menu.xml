@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/action_find_on_page_upward"
+        android:title="@string/find_on_page_upward"
+        android:icon="@drawable/ic_keyboard_arrow_up_white_24dp"
+        android:enabled="true"
+        android:visible="true"
+        app:showAsAction="always"/>
+    <item android:id="@+id/action_find_on_page_downward"
+        android:title="@string/find_on_page_upward"
+        android:icon="@drawable/ic_keyboard_arrow_up_white_24dp"
+        android:enabled="true"
+        android:visible="true"
+        app:showAsAction="always"/>
+</menu>

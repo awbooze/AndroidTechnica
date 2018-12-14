@@ -38,6 +38,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -60,6 +61,7 @@ import java.util.List;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -89,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
     private String headerText;
     private boolean hackActionBarReset = false;
     private boolean isScheduled;
+    private boolean findOnPage = false;
     private SharedPreferences sharedSettings;
     private SharedPreferences.Editor sharedSettingsEditor;
     private SharedPreferences.OnSharedPreferenceChangeListener sharedSettingsChangeListener;
@@ -132,6 +135,12 @@ public class MainActivity extends AppCompatActivity {
         arsWebView.setWebViewClient(aWebViewClient);
         aWebChromeClient = new ArsWebChromeClient();
         arsWebView.setWebChromeClient(aWebChromeClient);
+        arsWebView.setFindListener(new WebView.FindListener() {
+            @Override
+            public void onFindResultReceived(int activeMatchOrdinal, int numberOfMatches, boolean isDoneCounting) {
+                Toast.makeText(getApplicationContext(), "Matches: " + numberOfMatches, Toast.LENGTH_LONG).show();
+            }
+        });
 
         //Initialize the bottom toolbar
         appToolbar = findViewById(R.id.toolbar);
@@ -435,7 +444,7 @@ public class MainActivity extends AppCompatActivity {
 
                 sharedSettingsEditor = sharedSettings.edit();
                 sharedSettingsEditor.putString("CurrentURL", url);
-                sharedSettingsEditor.commit();
+                sharedSettingsEditor.apply();
 
                 invalidateOptionsMenu();
             }
@@ -627,7 +636,7 @@ public class MainActivity extends AppCompatActivity {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
-        this.invalidateOptionsMenu();
+        invalidateOptionsMenu();
     }
 
     //Called when the options menu for the bottom app bar gets created
@@ -639,33 +648,88 @@ public class MainActivity extends AppCompatActivity {
         bottomMenu = menu;
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.bottom_menu, menu);
+
+        //Configure the search view for finding text on the page
+        MenuItem findOnPageItem = menu.findItem(R.id.action_find_on_page);
+        findOnPageItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem menuItem) {
+                findOnPage = true;
+                invalidateOptionsMenu();
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem menuItem) {
+                findOnPage = false;
+                invalidateOptionsMenu();
+                arsWebView.clearMatches();
+                return true;
+            }
+        });
+        SearchView findOnPageView = (SearchView) findOnPageItem.getActionView();
+        findOnPageView.setSubmitButtonEnabled(true);
+        findOnPageView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                arsWebView.findAllAsync(query);
+                Toast.makeText(getApplicationContext(), query, Toast.LENGTH_LONG).show();
+                Log.d("string_changed", "String changed in search view");
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                arsWebView.findAllAsync(newText);
+                Toast.makeText(getApplicationContext(), newText, Toast.LENGTH_LONG).show();
+                return true;
+            }
+        });
+
         return true;
     }
 
     @Override
     public boolean onPrepareOptionsMenu (Menu menu) {
         super.onPrepareOptionsMenu(menu);
-
-        menu.clear();                                               //Clear the menu
+        menu.clear();                                                   //Clear the menu
 
         MenuInflater menuInflater = getMenuInflater();              //Recreate the menu like it had just been created
         menuInflater.inflate(R.menu.bottom_menu, menu);
 
-        MenuItem forwardItem = menu.findItem(R.id.action_forward);  //Find the forward button on the menu
-
-        if (arsWebView.canGoForward()) {                            //If the app can go forward
-            forwardItem.setEnabled(true);                           //Enable the forward button and
-            forwardItem.getIcon().setAlpha(255);                    //Show the user that it is enabled
+        if(findOnPage) {
+            MenuItem findOnPage_Upward = menu.findItem(R.id.action_find_on_page_upward);
+            findOnPage_Upward.setVisible(true);
+            MenuItem findOnPage_Downward = menu.findItem(R.id.action_find_on_page_downward);
+            findOnPage_Downward.setVisible(true);
         }
-        else {                                                      //Otherwise
-            forwardItem.setEnabled(false);                          //Disable the forward button and
-            forwardItem.getIcon().setAlpha(140);                    //Show the user that it is disabled
+        else {
+
+            MenuItem findOnPage_Upward = menu.findItem(R.id.action_find_on_page_upward);
+            findOnPage_Upward.setVisible(false);
+            MenuItem findOnPage_Downward = menu.findItem(R.id.action_find_on_page_downward);
+            findOnPage_Downward.setVisible(false);
+
+            MenuItem forwardItem = menu.findItem(R.id.action_forward);  //Find the forward button on the menu
+
+            if (arsWebView.canGoForward()) {                            //If the app can go forward
+                forwardItem.setEnabled(true);                           //Enable the forward button and
+                forwardItem.getIcon().setAlpha(255);                    //Show the user that it is enabled
+            }
+            else {                                                      //Otherwise
+                forwardItem.setEnabled(false);                          //Disable the forward button and
+                forwardItem.getIcon().setAlpha(140);                    //Show the user that it is disabled
+            }
         }
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+        //Include the super call to expand the search action view
+        super.onOptionsItemSelected(item);
+
         switch (item.getItemId()) {
             case R.id.action_backward:
                 // User chose to move backward in the page history
@@ -709,7 +773,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return true;
             case R.id.action_find_on_page:
-                Toast.makeText(this, R.string.unfinished, Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_reload:
                 // User chose to reload the page.
