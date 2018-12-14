@@ -14,6 +14,9 @@
     <string name="unfinished">Sorry, but this feature has not yet been implemented.</string>
     <string name="url_copy_successful">URL copied</string>
     <string name="url_copy_failed">URL copying failed</string>
+    <string name="email_copy_successful">Email address copied</string>
+    <string name="email_copy_failed">Email copying failed</string>
+
 
     <!-- Strings related to Settings -->
     <string name="settings_title">Settings</string>

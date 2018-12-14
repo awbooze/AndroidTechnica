@@ -33,6 +33,7 @@ import android.content.pm.ShortcutManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Icon;
+import android.net.MailTo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -406,14 +407,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Creates a customized WebViewClient, which determines the behavior of the internal webView
+     * Creates a customized WebViewClient, which determines the behavior of the internal WebView
      */
 
     private class ArsWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            if (Uri.parse(url).getHost().equals("arstechnica.com")) {
-                // This is Ars Technica, so do not override; let my WebView load the page
+            if (MailTo.isMailTo(url)) {
+                Intent emailIntent = new Intent(Intent.ACTION_SENDTO);        //Email this person
+                emailIntent.setData(Uri.parse(url));
+                arsWebView.getContext().startActivity(Intent.createChooser(emailIntent,"Send email"));
+                return true;
+            }
+            else if (Uri.parse(url).getHost().equals("arstechnica.com")) {
+                // This is Ars Technica, so do not override; let the WebView load the page
                 return false;
             }
             else if (Uri.parse(url).getHost().equals("nepsta.com")) {
@@ -580,13 +587,30 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     case 13:
                         ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);        //Copy the url to the clipboard
-                        ClipData clip = ClipData.newPlainText("Link", hitTestResult.getExtra());
-                        if (clip != null) {
-                            clipboard.setPrimaryClip(clip);
+                        ClipData urlClip = ClipData.newPlainText("Link", hitTestResult.getExtra());
+                        if (urlClip != null) {
+                            clipboard.setPrimaryClip(urlClip);
                             Toast.makeText(MainActivity.this, R.string.url_copy_successful, Toast.LENGTH_SHORT).show();
                         }
-                        else{
+                        else {
                             Toast.makeText(MainActivity.this, R.string.url_copy_failed, Toast.LENGTH_SHORT).show();
+                        }
+                        return true;
+                    case 20:
+                        Intent emailIntent = new Intent(Intent.ACTION_SENDTO);        //Email this person through other apps
+                        //emailIntent.setType("text/plain");
+                        emailIntent.setData(Uri.fromParts("mailto", hitTestResult.getExtra(), null));
+                        arsWebView.getContext().startActivity(Intent.createChooser(emailIntent,"Send email"));
+                        return true;
+                    case 23:
+                        clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);        //Copy the url to the clipboard
+                        ClipData emailClip = ClipData.newPlainText("Link", hitTestResult.getExtra());
+                        if (emailClip != null) {
+                            clipboard.setPrimaryClip(emailClip);
+                            Toast.makeText(MainActivity.this, R.string.email_copy_successful, Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            Toast.makeText(MainActivity.this, R.string.email_copy_failed, Toast.LENGTH_SHORT).show();
                         }
                         return true;
                     default:
@@ -597,7 +621,13 @@ public class MainActivity extends AppCompatActivity {
 
         //Set the header title of the context menu to the link or image url
         TextView headerTitle = new TextView(this);
-        String headerText = hitTestResult.getExtra();
+        String headerText;
+        if(hitTestResult.getType() == WebView.HitTestResult.EMAIL_TYPE) {
+            headerText = "mailto:" + hitTestResult.getExtra();
+        }
+        else {
+            headerText = hitTestResult.getExtra();
+        }
         headerTitle.setText(headerText);
         headerTitle.setTextSize(16);
         headerTitle.setPadding((int) (10 * getResources().getDisplayMetrics().density), (int) (6 * getResources().getDisplayMetrics().density), (int) (10 * getResources().getDisplayMetrics().density), (int) (6 * getResources().getDisplayMetrics().density));
@@ -609,7 +639,8 @@ public class MainActivity extends AppCompatActivity {
             //menu.add(Menu.NONE, 0, 0, "Open image in browser").setOnMenuItemClickListener(handler);
             //menu.add(Menu.NONE, 1, 0, "Save image").setOnMenuItemClickListener(handler);
             //menu.add(Menu.NONE, 2, 0, "Copy image").setOnMenuItemClickListener(handler);
-        } else if (hitTestResult.getType() == WebView.HitTestResult.SRC_ANCHOR_TYPE) {
+        }
+        else if (hitTestResult.getType() == WebView.HitTestResult.SRC_ANCHOR_TYPE) {
             // Menu options for a hyperlink.
             /*if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N && isInMultiWindowMode()) {
                 menu.add(Menu.NONE, 11, 0, "Open in new browser window").setOnMenuItemClickListener(handler);
@@ -619,6 +650,11 @@ public class MainActivity extends AppCompatActivity {
             }*/
             menu.add(Menu.NONE, 12, 0, "Share link").setOnMenuItemClickListener(handler);
             menu.add(Menu.NONE, 13, 0, "Copy link address").setOnMenuItemClickListener(handler);
+        }
+        else if (hitTestResult.getType() == WebView.HitTestResult.EMAIL_TYPE) {
+            //Menu options for an email address
+            menu.add(Menu.NONE, 20, 0, "Send email").setOnMenuItemClickListener(handler);
+            menu.add(Menu.NONE, 23, 0, "Copy email address").setOnMenuItemClickListener(handler);
         }
     }
 
